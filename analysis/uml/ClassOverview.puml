@@ -1,0 +1,53 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Main {}
+
+class World {}
+
+class Game {}
+
+interface Map {}
+
+interface Entity {}
+
+class Player implements Entity {}
+
+
+interface Enemy implements Entity {}
+
+class PolygonEnemy implements Enemy {}
+
+
+interface Projectile implements Entity {}
+
+interface Item extends Entity {}
+
+
+class Inventory<Item> {}
+
+
+interface Weapon {}
+
+class CollisionSystem {}
+
+
+
+Weapon -> Projectile
+Player -> Weapon
+Inventory -> Item
+Player -> Inventory
+World -> Map
+
+Main -> Game
+Main -> World
+Main -> CollisionSystem
+
+World -> Entity
+
+CollisionSystem -> Entity
+
+
+
+
+@enduml
