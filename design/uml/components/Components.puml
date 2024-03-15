@@ -1,29 +1,108 @@
 @startuml
 'https://plantuml.com/component-diagram
+'skinparam linetype ortho
+'skinparam linetype polyline
+'top to bottom direction
+left to right direction
+'skinparam nodesep 40
+'skinparam ranksep 50
+
 
 [Core]
 
+[Core] -( IGamePluginService
+[Core] --( IEntityProcessingService
+[Core] ---( IPostEntityProcessingService
+
+
 [Common]
+[Common] - IGamePluginService
+[Common] -- IEntityProcessingService
+[Common] --- IPostEntityProcessingService
+[Common] ---- IEntity
+
 
 [Player]
+[Player] -( WeaponSPI
+[Player] ..|> IEntityProcessingService
+[Player] ..|> IGamePluginService
+[Player] -( InventorySPI
+[Player] -( ItemSPI
+
 
 [CollisionSystem]
+[CollisionSystem] -( IEntity
+[CollisionSystem] ..|> IPostEntityProcessingService
+
 
 [CommonProjectile]
-[Projectile]
+[CommonProjectile] -- ProjectileSPI
+
+
+
+'[BaseProjectile]
+'[BaseProjectile] ..|> ProjectileSPI
+'[CommonProjectile] ..|> IEntity
+
 
 [CommonWeapon]
-[Weapon]
+[CommonWeapon] -- WeaponSPI
+
+[CommonWeapon] -( ProjectileSPI
+
+
+[BaseWeapon]
+
+[BaseWeapon] ..|> ProjectileSPI
+[BaseWeapon] ..|> WeaponSPI
+[BaseWeapon] ..|> IEntityProcessingService
+[BaseWeapon] ..|> IGamePluginService
+
 
 [CommonEnemy]
+[CommonEnemy] -- EnemySPI
 
-[Enemy]
+
+[PolygonEnemy]
+
+[PolygonEnemy] -( AISPI
+[PolygonEnemy] ..|> EnemySPI
+[PolygonEnemy] ..|> IEntity
+[PolygonEnemy] ..|> IEntityProcessingService
+[PolygonEnemy] ..|> IGamePluginService
+
 
 [CommonAI]
-[AI]
+[CommonAI] - AISPI
+
+
+[AStarAI]
+[AStarAI] ..|> AISPI
+[AStarAI] ..|> IGamePluginService
+[AStarAI] ..|> IEntityProcessingService
+
+
+
+[CommonInventory]
+[CommonInventory] - InventorySPI
 
 [Inventory]
+[Inventory] ..|> InventorySPI
+[Inventory] -( ItemSPI
+
 
 [CommonItem]
+[CommonItem] - ItemSPI
+
+
+[HealthItem]
+[HealthItem] ..|> ItemSPI
+[HealthItem] ..|> IEntity
+
+
+
+
+
+
 
 @enduml
